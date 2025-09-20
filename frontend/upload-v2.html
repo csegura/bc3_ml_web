@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subir Archivo BC3</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="/static/styles-tailwind.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#1e66f5',
+                        'primary-hover': '#1651c6',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <!-- Navigation Header -->
+    <nav class="nav-bar">
+        <div class="w-full px-4 sm:px-6 lg:px-8">            
+            <div class="flex justify-between h-16">
+            <div class="flex items-center"><img src="acr_copilot.png" alt="ACR Copilot Logo" class="h-12 w-auto" /></div>            
+                <div class="flex items-center">
+                    <h1 class="nav-title">Subir Archivo BC3</h1>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <a href="/index-v2.html" class="nav-btn-secondary tooltip" data-tooltip="Volver a Registros">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="w-full py-8 px-4 sm:px-6 lg:px-8">
+        <!-- Upload Form -->
+        <div class="card">
+            <div class="mb-6">
+                <h2 class="text-2xl font-bold text-gray-900">Subir Archivo BC3 Nuevo</h2>
+                <p class="mt-2 text-gray-600">Completa los detalles del proyecto y selecciona tu archivo BC3 para procesar</p>
+            </div>
+
+            <form id="uploadForm">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+                    <!-- Left Column - Form Data -->
+                    <div class="space-y-6">
+                        <div class="mb-4">
+                            <h3 class="text-lg font-semibold text-gray-900 mb-2">Detalles del Proyecto</h3>
+                            <p class="text-sm text-gray-600">Completa la información del proyecto</p>
+                        </div>
+
+                        <!-- Project Name -->
+                        <div>
+                            <label for="project_name" class="block text-sm font-medium text-gray-700 mb-1">
+                                Nombre del Proyecto *
+                            </label>
+                            <input type="text" 
+                                   id="project_name" 
+                                   name="project_name" 
+                                   required 
+                                   class="modal-input bg-gray-100" 
+                                   placeholder="Ingresa el nombre del proyecto">
+                            <p class="mt-1 text-sm text-gray-500">Un nombre descriptivo para tu proyecto de construcción</p>
+                        </div>
+
+                        <!-- Localization -->
+                        <div>
+                            <label for="localization" class="block text-sm font-medium text-gray-700 mb-1">
+                                Localización *
+                            </label>
+                            <select id="localization" name="localization" required class="modal-select bg-gray-100">
+                                <option value="">-- Seleccionar Localización --</option>
+                                <option value="NAVARRA">NAVARRA</option>
+                                <option value="PAIS VASCO">PAIS VASCO</option>
+                                <option value="ZARAGOZA">ZARAGOZA</option>
+                                <option value="CASTILLA Y LEON">CASTILLA Y LEON</option>
+                                <option value="MADRID">MADRID</option>
+                            </select>
+                            <p class="mt-1 text-sm text-gray-500">Localización regional para precios y regulaciones</p>
+                        </div>
+
+                        <!-- Email -->
+                        <div>
+                            <label for="email" class="block text-sm font-medium text-gray-700 mb-1">
+                                Dirección de Email *
+                            </label>
+                            <input type="email" 
+                                   id="email" 
+                                   name="email" 
+                                   required 
+                                   class="modal-input bg-gray-100" 
+                                   placeholder="tu.email@ejemplo.com">
+                            <p class="mt-1 text-sm text-gray-500">Email de contacto para este proyecto</p>
+                        </div>
+
+                        <!-- Year -->
+                        <div>
+                            <label for="year" class="block text-sm font-medium text-gray-700 mb-1">
+                                Año *
+                            </label>
+                            <input type="number" 
+                                   id="year" 
+                                   name="year" 
+                                   min="1900" 
+                                   max="3000" 
+                                   required 
+                                   class="modal-input bg-gray-100" 
+                                   placeholder="2024">
+                            <p class="mt-1 text-sm text-gray-500">Año del proyecto para referencia de precios base</p>
+                        </div>
+                    </div>
+
+                    <!-- Right Column - File Upload -->
+                    <div class="space-y-6">
+                        <div class="mb-4">
+                            <h3 class="text-lg font-semibold text-gray-900 mb-2">Archivo BC3</h3>
+                            <p class="text-sm text-gray-600">Selecciona el archivo BC3 para procesar</p>
+                        </div>
+
+                        <div>
+                            <label for="file" class="block text-sm font-medium text-gray-700 mb-3">
+                                Archivo BC3 *
+                            </label>
+                            <div class="flex justify-center px-6 py-8 border-2 border-gray-300 border-dashed rounded-lg hover:border-gray-400 transition-colors bg-gray-50 hover:bg-gray-100">
+                                <div class="space-y-3 text-center">
+                                    <svg class="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48">
+                                        <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                    </svg>
+                                    <div class="text-center">
+                                        <label for="file" class="relative cursor-pointer bg-white rounded-md font-medium text-primary hover:text-primary-hover focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-primary px-4 py-2">
+                                            <span>Subir un archivo</span>
+                                            <input id="file" name="file" type="file" accept=".bc3" required class="sr-only">
+                                        </label>
+                                    </div>
+                                    <p class="text-sm text-gray-600">o arrastra y suelta aquí</p>
+                                    <p class="text-xs text-gray-500">Solo archivos BC3 hasta 50MB</p>
+                                </div>
+                            </div>
+                            <div id="file-info" class="mt-3 text-sm text-gray-600 hidden"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="mt-8 pt-6 border-t border-gray-200">
+                    <button type="submit" 
+                            class="w-full btn-primary text-base py-3"
+                            id="submitBtn">
+                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
+                        </svg>
+                        Subir y Procesar Archivo
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Progress Section (hidden by default) -->
+        <div id="progress-section" class="card mt-6 hidden">
+            <div class="text-center">
+                <div class="spinner mx-auto mb-4"></div>
+                <h3 class="text-lg font-medium text-gray-900 mb-2">Procesando tu Archivo</h3>
+                <p class="text-gray-600 mb-4">Convirtiendo archivo BC3 a formato JSON...</p>
+                <div class="w-full bg-gray-200 rounded-full h-2">
+                    <div id="progress-bar" class="bg-primary h-2 rounded-full transition-all duration-300" style="width: 0%"></div>
+                </div>
+                <p id="progress-text" class="text-sm text-gray-500 mt-2">Iniciando subida...</p>
+            </div>
+        </div>
+
+    </main>
+
+    <script src="/static/tree-utils.js"></script>
+    <script src="/static/upload-v2.js"></script>
+</body>
+</html>

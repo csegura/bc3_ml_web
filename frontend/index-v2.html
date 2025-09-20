@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registros BC3</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="/static/styles-tailwind.css">
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <!-- Navigation Header -->
+    <nav class="nav-bar">
+        <div class="w-full px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center"><img src="acr_copilot.png" alt="ACR Copilot Logo" class="h-12 w-auto" /></div>
+                <div class="flex items-center">
+                    <h1 class="nav-title">ACR Categorizador de presupuestos x ML (ia)</h1>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <a href="/upload-v2.html" class="nav-btn-primary tooltip" data-tooltip="Subir Archivo Nuevo">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="w-full py-6 px-4 sm:px-6 lg:px-8">
+        <!-- Page Header -->
+        <div class="mb-8">
+            <h2 class="text-2xl font-bold text-gray-900">Registros de Proyecto</h2>            
+        </div>
+
+        <!-- Filters Section -->
+        <div class="card mb-6">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                <div>
+                    <label for="search" class="block text-sm font-medium text-gray-700 mb-1">Buscar</label>
+                    <input type="text" id="search" placeholder="Buscar código, proyecto, email..." 
+                           class="modal-input" />
+                </div>
+                <div>
+                    <label for="filter_localization" class="block text-sm font-medium text-gray-700 mb-1">Localización</label>
+                    <select id="filter_localization" class="modal-select">
+                        <option value="">Todas las localizaciones</option>
+                        <option value="NAVARRA">NAVARRA</option>
+                        <option value="PAIS VASCO">PAIS VASCO</option>
+                        <option value="ZARAGOZA">ZARAGOZA</option>
+                        <option value="CASTILLA Y LEON">CASTILLA Y LEON</option>
+                        <option value="MADRID">MADRID</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="filter_year" class="block text-sm font-medium text-gray-700 mb-1">Año</label>
+                    <input type="number" id="filter_year" placeholder="Año" min="1900" max="3000" 
+                           class="modal-input" />
+                </div>
+                <div class="flex items-end space-x-2">
+                    <button id="applyFilters" class="btn-primary flex-1">Filtrar</button>
+                    <button id="clearFilters" class="btn-secondary flex-1">Limpiar</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Records Table -->
+        <div class="card">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-lg font-medium text-gray-900">Registros</h3>
+                <span id="recordsCount" class="text-sm text-gray-500">0 registros</span>
+            </div>
+            
+            <div class="overflow-x-auto">
+                <table class="records-table table-auto w-full">
+                    <thead>
+                        <tr>
+                            <th>Código</th>
+                            <th>Proyecto</th>
+                            <th>Localización</th>
+                            <th>Email</th>
+                            <th>Año</th>
+                            <th>Subido</th>
+                            <th>Estado ML</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="records-tbody">
+                        <!-- Records will be populated here -->
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- Empty state -->
+            <div id="empty-state" class="text-center py-12 hidden">
+                <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                </svg>
+                <h3 class="mt-2 text-sm font-medium text-gray-900">No se encontraron registros</h3>
+                <p class="mt-1 text-sm text-gray-500">Comienza subiendo un archivo BC3.</p>
+                <div class="mt-6">
+                    <a href="/upload-v2.html" class="btn-primary">
+                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                        </svg>
+                        Subir Archivo Nuevo
+                    </a>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+
+    <script src="/static/tree-utils.js"></script>
+    <script src="/static/script-v2.js"></script>
+</body>
+</html>

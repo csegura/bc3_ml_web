@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Presupuesto BC3</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Using custom tree implementation instead of Tabulator -->
+    <link rel="stylesheet" href="/static/styles-tailwind.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#1e66f5',
+                        'primary-hover': '#1651c6',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <!-- Navigation Header -->
+    <nav class="nav-bar">
+        <div class="w-full px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center"><a href="/index-v2.html"><img src="acr_copilot.png" alt="ACR Copilot Logo" class="h-12 w-auto cursor-pointer" /></a></div>
+                <div class="flex items-center">
+                    <h1 class="nav-title">Presupuesto BC3 (Importado para ML)</h1>
+                </div>
+                <div id="standardNavigation" class="flex items-center space-x-4">
+                    <!-- Navigation will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="w-full py-6 px-4 sm:px-6 lg:px-8">
+        <!-- Breadcrumb -->
+        <nav id="breadcrumb" class="flex mb-6" aria-label="Breadcrumb">
+            <ol class="inline-flex items-center space-x-1 md:space-x-3">
+                <li class="inline-flex items-center">
+                    <a href="/index-v2.html" class="text-gray-700 hover:text-gray-900">Registros</a>
+                </li>
+                <li>
+                    <div class="flex items-center">
+                        <svg class="w-4 h-4 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
+                        </svg>
+                        <span class="ml-1 text-sm font-medium text-gray-500" id="currentFile">Cargando...</span>
+                    </div>
+                </li>
+            </ol>
+        </nav>
+
+        <!-- Instructions
+        <div class="card mb-6">
+            <div class="flex items-center p-4 text-sm text-blue-800 bg-blue-50 rounded-lg">
+                <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path>
+                </svg>
+                <span>Haz clic en los nodos del árbol para expandir o colapsar. Usa los controles arriba para expandir/colapsar todos los nodos a la vez.</span>
+            </div>
+        </div> -->
+
+        <!-- Tree Controls -->
+        <div class="tree-controls">
+            <span class="tree-controls-label">Controles:</span>
+            <button id="expandAll" class="tree-ctrl-btn tree-ctrl-btn-expand tooltip" data-tooltip="Expandir Todo">⊞</button>
+            <button id="collapseAll" class="tree-ctrl-btn tree-ctrl-btn-collapse tooltip" data-tooltip="Colapsar Todo">⊟</button>
+            
+            <div class="tree-controls-divider"></div>
+            
+            <span class="tree-controls-label">Expandir:</span>
+            <button id="expandLevel1" class="tree-ctrl-btn tree-ctrl-btn-level tooltip" data-tooltip="Expandir Nivel 1">1</button>
+            <button id="expandLevel2" class="tree-ctrl-btn tree-ctrl-btn-level tooltip" data-tooltip="Expandir Nivel 2">2</button>
+            <button id="expandLevel3" class="tree-ctrl-btn tree-ctrl-btn-level tooltip" data-tooltip="Expandir Nivel 3">3</button>
+            <button id="expandLevel4" class="tree-ctrl-btn tree-ctrl-btn-level tooltip" data-tooltip="Expandir Nivel 4">4</button>
+            <button id="expandLevel5" class="tree-ctrl-btn tree-ctrl-btn-level tooltip" data-tooltip="Expandir Nivel 5+">5+</button>
+            
+            <div class="tree-controls-divider"></div>
+            
+            <span class="tree-controls-label">Colapsar:</span>
+            <button id="collapseToLevel1" class="tree-ctrl-btn tree-ctrl-btn-level tooltip" data-tooltip="Colapsar a Nivel 1">↑1</button>
+            <button id="collapseToLevel2" class="tree-ctrl-btn tree-ctrl-btn-level tooltip" data-tooltip="Colapsar a Nivel 2">↑2</button>
+            <button id="collapseToLevel3" class="tree-ctrl-btn tree-ctrl-btn-level tooltip" data-tooltip="Colapsar a Nivel 3">↑3</button>
+            <button id="collapseToLevel4" class="tree-ctrl-btn tree-ctrl-btn-level tooltip" data-tooltip="Colapsar a Nivel 4">↑4</button>
+        </div>
+
+        <!-- Main Content -->
+        <div class="card">
+            <div id="calcMessage" class="mb-4 hidden"></div>
+            <div id="budget-table" class="w-full"></div>
+        </div>
+
+    </main>
+
+
+    <script src="/static/tree-utils.js"></script>
+    <script src="/static/calc-v2.js"></script>
+    <script>
+        // Initialize standard navigation on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const navContainer = document.getElementById('standardNavigation');
+            if (navContainer) {
+                navContainer.innerHTML = generateStandardNavigation('calc');
+            }
+        });
+    </script>
+</body>
+</html>

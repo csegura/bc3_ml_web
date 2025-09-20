@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Presupuesto BC3 Agrupado por Categoría ML</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="/static/styles-tailwind.css">
+    <script src="/static/tree-utils.js"></script>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <!-- Navigation Header -->
+    <nav class="nav-bar">
+        <div class="w-full px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center"><a href="/index-v2.html"><img src="acr_copilot.png" alt="ACR Copilot Logo" class="h-12 w-auto cursor-pointer" /></a></div>                
+                <div class="flex items-center">
+                    <h1 class="nav-title">Agrupado por Categoría</h1>
+                </div>
+                <div id="standardNavigation" class="flex items-center space-x-4">
+                    <!-- Navigation will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="w-full py-6 px-4 sm:px-6 lg:px-8">
+        <!-- Page Header -->
+        <div class="mb-8">
+            <h2 class="text-2xl font-bold text-gray-900">Elementos del Presupuesto por Categoría ML</h2>
+            <p class="mt-2 text-gray-600">Elementos del presupuesto organizados por predicciones de aprendizaje automático</p>
+        </div>
+
+        <!-- Tree Controls -->
+        <div class="tree-controls">
+            <span class="tree-controls-label">Controles:</span>
+            <button id="expandAll" class="tree-ctrl-btn tree-ctrl-btn-expand tooltip" data-tooltip="Expandir Todo">⊞</button>
+            <button id="collapseAll" class="tree-ctrl-btn tree-ctrl-btn-collapse tooltip" data-tooltip="Colapsar Todo">⊟</button>
+            
+            <div class="tree-controls-divider"></div>
+            
+            <div class="tree-controls-group">
+                <span class="tree-controls-label">Búsqueda de Texto:</span>
+                <input type="text" id="textSearch" class="form-input" style="width: 250px; margin-right: 8px;" placeholder="Buscar en resúmenes y descripciones...">
+                <button id="selectMatchingBtn" class="tree-ctrl-btn tooltip" data-tooltip="Seleccionar todos los elementos que contengan este texto">🔍</button>
+                <button id="clearSearchBtn" class="tree-ctrl-btn tooltip" data-tooltip="Limpiar búsqueda" style="margin-left: 4px;">✕</button>
+                <span id="searchResults" class="text-sm" style="color: var(--acr-white); margin-left: 12px;"></span>
+            </div>
+            
+        </div>
+
+        <!-- Main Content -->
+        <div class="card">
+            <div class="flex justify-between items-center mb-4">
+                <div>
+                    <!-- <h2 class="text-lg font-medium text-gray-900">Elementos del Presupuesto Agrupados por Categoría ML</h2> -->
+                    <p id="recordInfo" class="text-sm text-gray-600">Cargando...</p>
+                </div>
+                <div class="flex items-center space-x-2">
+                    <span id="totalItems" class="text-sm text-gray-500">0 elementos</span>
+                    <span id="totalAmount" class="text-sm font-medium text-gray-700">0,00</span>
+                </div>
+            </div>
+            
+            <div id="grouped-table" class="w-full"></div>
+        </div>
+
+    </main>
+
+    <!-- Classification Edit Modal -->
+    <div id="editModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full hidden z-50">
+        <div class="relative top-12 mx-auto border w-[1000px] max-w-[95vw] shadow-2xl rounded-lg bg-white overflow-hidden">
+            <!-- Modal Header -->
+            <div class="px-6 py-4" style="background-color: var(--acr-black);">
+                <h3 class="text-xl font-semibold" style="color: var(--acr-white);">Editar Clasificación</h3>
+            </div>
+            
+            <!-- Modal Body -->
+            <div class="px-6 py-6 modal-container">
+                <div class="mb-6">
+                    <p id="modalItemInfo" class="text-sm text-gray-600 mb-3 font-medium"></p>
+                    <div class="bg-gray-50 border border-gray-200 rounded-lg p-4">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Descripción:</label>
+                        <p id="modalItemDescription" class="text-sm text-gray-700 max-h-24 overflow-y-auto leading-relaxed"></p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+                    <!-- ML Suggestions Section -->
+                    <div class="lg:col-span-1">
+                        <label for="modalSuggestions" class="block text-sm font-medium text-gray-700 mb-2">
+                            Sugerencias ML (Predicciones Principales):
+                        </label>
+                        <select id="modalSuggestions" class="modal-select w-full">
+                            <option value="">Elige de las sugerencias ML...</option>
+                        </select>
+                        <p class="text-xs text-gray-500 mt-1">Estas son las predicciones principales del modelo IA para este elemento</p>
+                    </div>
+
+                    <!-- All Classes Section -->
+                    <div class="lg:col-span-1">
+                        <label for="modalAllClasses" class="block text-sm font-medium text-gray-700 mb-2">
+                            Todas las Clases Disponibles:
+                        </label>
+                        <div class="relative mb-2">
+                            <input type="text" id="modalClassFilter" class="modal-input w-full pr-8" placeholder="Escribe para filtrar clases...">
+                            <svg class="absolute right-2 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                            </svg>
+                        </div>
+                        <select id="modalAllClasses" class="modal-select w-full" size="8">
+                            <option value="">Cargando todas las clases...</option>
+                        </select>
+                        <p class="text-xs text-gray-500 mt-1">Lista completa de categorías de clasificación disponibles</p>
+                    </div>
+
+                    <!-- Custom Input Section -->
+                    <div class="lg:col-span-1">
+                        <label for="modalCustomInput" class="block text-sm font-medium text-gray-700 mb-2">
+                            Entrada Manual:
+                        </label>
+                        <input type="text" id="modalCustomInput" class="modal-input w-full" placeholder="Escribe o pega una categoría personalizada">
+                        <p class="text-xs text-gray-500 mt-1">Ingresa una clasificación personalizada si no se encuentra en sugerencias o clases</p>
+                    </div>
+                </div>
+
+                <div class="mb-8">
+                    <label class="flex items-center p-3  border  rounded-lg  transition-colors cursor-pointer">
+                        <input type="checkbox" id="modalApplySubtree" class="h-4 w-4 border-gray-300 rounded ">
+                        <span class="ml-3 text-sm text-gray-900 font-medium">Aplicar al subárbol (todos los nodos hijos)</span>
+                    </label>
+                </div>
+
+                <!-- Modal Footer -->
+                <div class="flex justify-between items-center pt-4 border-t border-gray-200">
+                    <button id="modalRevert" class="btn-secondary">
+                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6"></path>
+                        </svg>
+                        Revertir a Predicción
+                    </button>
+                    <div class="space-x-3">
+                        <button id="modalCancel" class="btn-secondary px-6">
+                            Cancelar
+                        </button>
+                        <button id="modalSave" class="btn-primary px-6">
+                            Guardar Cambios
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/grouped-v2.js"></script>
+    <script>
+        // Initialize standard navigation on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const navContainer = document.getElementById('standardNavigation');
+            if (navContainer) {
+                navContainer.innerHTML = generateStandardNavigation('grouped');
+            }
+        });
+    </script>
+</body>
+</html>

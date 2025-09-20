@@ -1,0 +1,737 @@
+/* BC3 Budget Calculator - Consolidated CSS Styles */
+
+/* Custom color palette */
+:root {
+  /* --primary-blue: #1e66f5; */
+  /* --primary-blue-hover: #1651c6; */
+  --secondary-gray: #e9ecef;
+  --secondary-gray-hover: #dfe3e7;
+  --warning-amber: #ffbb00;
+  /* --success-green: #0b7285; */
+  --error-red: #d9480f;
+  
+  --acr-header-bg: #d8d5ce;
+  --acr-hover: #f1843b;
+  --acr-black: #262622;
+  --acr-white: #fff;
+  --acr-grey: #a1a1a2;
+  --acr-dust: #d8d5ce;
+  --acr-dust2: #e7e4dd;
+  --acr-orange: #f1843b;
+  --acr-green: #a9a726;
+  --acr-green2: #cccb9a;
+  --acr-green3: #cecc75;
+}
+
+/* ===== NAVIGATION STYLES ===== */
+.nav-bar {
+  background-color: var(--acr-black);
+  color: var(--acr-white);
+  overflow: visible;
+}
+
+/* Ensure navigation containers don't clip tooltips */
+#standardNavigation {
+  overflow: visible;
+}
+
+.nav-title {  
+  font-size: 1.35rem;
+  font-weight: 600;
+  color: var(--acr-white);
+}
+
+/* ===== BUTTON COMPONENTS ===== */
+.btn-primary {
+  @apply inline-flex items-center px-4 py-2 bg-blue-600 text-white font-semibold rounded-lg shadow hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors;
+}
+
+.btn-secondary {
+  @apply inline-flex items-center px-4 py-2 bg-gray-200 text-gray-800 font-semibold rounded-lg shadow hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 transition-colors;
+}
+
+.btn-sm {
+  @apply px-2 py-1 text-sm;
+}
+
+/* Navigation Icon Buttons */
+.nav-btn {
+  @apply inline-flex items-center justify-center p-2 text-white rounded-lg hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 transition-colors relative;
+}
+
+.nav-btn-primary {
+  @apply nav-btn bg-blue-600 hover:bg-blue-700;
+}
+
+.nav-btn-secondary {
+  @apply nav-btn bg-gray-600 hover:bg-gray-700;
+}
+
+/* Action buttons for tables */
+.action-btn {
+  @apply inline-flex items-center p-2 text-sm border border-transparent rounded-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors;
+}
+
+.action-btn-primary {
+  @apply text-blue-600 hover:text-blue-700 hover:bg-blue-50;
+}
+
+.action-btn-success {
+  @apply text-green-600 hover:text-green-700 hover:bg-green-50;
+}
+
+.action-btn-warning {
+  @apply text-orange-600 hover:text-orange-700 hover:bg-orange-50;
+}
+
+.action-btn-purple {
+  @apply text-purple-600 hover:text-purple-700 hover:bg-purple-50;
+}
+
+/* ===== FORM COMPONENTS ===== */
+.form-input {
+  @apply w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-gray-50;
+}
+
+.form-select {
+  @apply w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-gray-50;
+}
+
+/* ===== PILLS/BADGES ===== */
+.pill {
+  @apply inline-flex items-center px-2 py-1 rounded-full text-xs font-medium;
+}
+
+.pill-code {
+  @apply bg-blue-100 text-blue-800;
+}
+
+.pill-tag {
+  @apply bg-orange-100 text-orange-800;
+}
+
+.pill-success {
+  @apply bg-green-100 text-green-800;
+}
+
+.pill-warning {
+  @apply bg-yellow-100 text-yellow-800;
+}
+
+/* ===== CARD COMPONENT ===== */
+.card {
+  @apply bg-white rounded-lg shadow-sm border border-gray-200 p-6;
+}
+
+/* popup dialog */
+.modal-container {
+  background-color: var(--acr-dust2);
+}
+
+/* ===== TREE TABLE STYLES ===== */
+.tree-table {
+  border-collapse: collapse;
+  width: 100%;
+  table-layout: fixed;  
+  font-size: 0.75rem;
+  line-height: 1rem;
+}
+
+.tree-table th,
+.tree-table td {
+  padding: 12px;
+  /* border-bottom: 1px solid #e5e7eb; */
+  vertical-align: middle;
+  text-align: left;
+  width: auto;
+}
+
+.tree-table th {
+  background: var(--acr-black);
+  font-weight: 600;
+  color: var(--acr-white);
+}
+
+.tree-table td:nth-child(1) span { margin: 0px; padding: 0px; } /* Código */
+
+/* Force all cells to respect column widths */
+
+.tree-table td:nth-child(1) { width: 7%; border-bottom: 0px; } /* Código */
+.tree-table td:nth-child(2) { width: 50%; } /* Descripción */
+.tree-table td:nth-child(3) { width: 20%; } /* Categoría ML (when present) */
+.tree-table td:nth-child(4) { width: 3%; }  /* Unidad */
+.tree-table td:nth-child(5) { width: 10%; } /* Tipo */
+.tree-table td:nth-child(6) { width: 6%; } /* Precio Unitario */
+.tree-table td:nth-child(7) { width: 3%; }  /* Cantidad */
+.tree-table td:nth-child(8) { width: 6%; } /* Importe Total */
+
+/* For tables without ML predictions, adjust the widths */
+.tree-table:not(.has-predictions) td:nth-child(3) { width: 8%; }  /* Unidad */
+.tree-table:not(.has-predictions) td:nth-child(4) { width: 10%; } /* Tipo */
+.tree-table:not(.has-predictions) td:nth-child(5) { width: 12%; } /* Precio Unitario */
+.tree-table:not(.has-predictions) td:nth-child(6) { width: 8%; }  /* Cantidad */
+.tree-table:not(.has-predictions) td:nth-child(7) { width: 15%; } /* Importe Total */
+
+
+/* Tree row types - Standardized across all tables */
+.tree-row-root {
+  font-weight: bold;
+  background: var(--acr-grey) !important;
+  border-left: 4px solid var(--acr-orange);
+}
+
+.tree-row-root td {
+  color: var(--acr-black) !important;
+  font-weight: bold;
+}
+
+.tree-row-chapter {
+  font-weight: 600;
+  background: var(--acr-dust) !important;
+  border-left: 4px solid var(--acr-green);
+}
+
+.tree-row-chapter td {
+  color: var(--acr-black) !important;
+  font-weight: 600;
+}
+
+.tree-row-leaf {
+  color: #374151;
+  background: white;
+  border-left: 2px solid #e5e7eb;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.tree-row-leaf:hover {
+  background: #f9fafb;
+}
+
+.tree-row-group {
+  font-weight: 600;
+  background: #f3f4f6;
+  color: #1f2937;
+  border-top: 2px solid #d1d5db;
+}
+
+/* Group header and summary styles for grouped view */
+.group-header {
+  background-color: var(--acr-dust) !important;
+  color: var(--acr-black) !important;
+  font-weight: 600;
+  border-bottom: 2px solid var(--acr-orange);
+}
+
+.group-summary {
+  background-color: #f8f9fa;
+  font-size: 0.875rem;
+  color: #6c757d;
+}
+
+/* User modification indicator */
+.user-modified-indicator {
+  display: inline-block;
+  margin-right: 4px;
+  font-size: 0.75rem;
+  opacity: 0.8;
+  transition: opacity 0.2s ease;
+}
+
+.user-modified-indicator:hover {
+  opacity: 1;
+}
+
+/* Selection styling for multi-select functionality */
+.selected-row {
+  background-color: var(--acr-green2) !important;
+  border-left: 3px solid var(--acr-green) !important;
+}
+
+.selected-row:hover {
+  background-color:var(--acr-green3) !important;
+}
+
+/* Bulk actions floating bar */
+#bulkActions {
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+/* Indeterminate checkbox styling */
+input[type="checkbox"]:indeterminate {
+  background-color: #3b82f6;
+  background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='white' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M4 8h8'/%3e%3c/svg%3e");
+  border-color: #3b82f6;
+}
+
+/* Tree controls */
+.tree-cell {
+  display: flex;
+  align-items: center;
+}
+
+.tree-toggle {
+  /* background: none; */
+  border: none;
+  cursor: pointer;
+  font-size: 1em;
+  line-height: 1;
+  color: var(--acr-orange);
+  width: 1.5em;
+  height: 1.5em;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 8px;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+.tree-toggle:hover {
+  color: var(--acr-hover);
+  background-color: rgba(241, 132, 59, 0.1);
+}
+
+.tree-toggle:focus {
+  outline: 2px solid var(--acr-orange);
+  outline-offset: 2px;
+}
+
+.tree-toggle[aria-expanded="false"] {
+  color: var(--acr-black) !important; 
+  background-color: transparent !important;
+  transform: rotate(-90deg);
+}
+
+.tree-toggle[aria-expanded="true"] {
+  transform: rotate(0deg);
+}
+
+.tree-spacer {
+  display: inline-block;
+  width: 1.2em;
+  height: 1.2em;
+  margin-right: 8px;
+}
+
+/* ===== ML PREDICTION STYLES ===== */
+.ml-prediction {
+  font-size: 0.875rem;
+  max-width: 320px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ml-cell-editable {
+  cursor: pointer;
+  border: 2px solid transparent;
+  padding: 2px 4px;
+  border-radius: 4px;
+  transition: all 0.2s;
+}
+
+.ml-cell-editable:hover {
+  border-color: #3b82f6;
+  background-color: #eff6ff;
+}
+
+.ml-cell-overridden {
+  background-color: #fef3c7 !important;
+  border-color: #f59e0b !important;
+  color: #92400e;
+  font-weight: 600;
+}
+
+/* Modified ML Categories */
+.ml-cell-modified {
+  background-color: #fff7ed !important;
+  border: 2px solid var(--acr-orange) !important;
+  border-radius: 6px;
+  padding: 4px 6px;
+  white-space: normal;
+  max-width: none;
+  overflow: visible;
+  text-overflow: initial;
+}
+
+.ml-original-struck {
+  text-decoration: line-through;
+  color: #6b7280;
+  font-style: italic;
+  opacity: 0.7;
+}
+
+.ml-new-category {
+  color: var(--acr-black);
+  font-weight: 600;
+  margin-left: 4px;
+}
+
+.ml-change-arrow {
+  color: var(--acr-orange);
+  font-weight: bold;
+  margin: 0 4px;
+  font-size: 0.9rem;
+}
+
+.ml-modified-indicator {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  background-color: var(--acr-orange);
+  border-radius: 50%;
+  margin-left: 6px;
+  vertical-align: middle;
+}
+
+/* Confidence bar styles */
+.confidence-bar {
+  height: 4px;
+  background-color: #e5e7eb;
+  border-radius: 2px;
+  overflow: hidden;
+  margin-top: 2px;
+}
+
+.confidence-fill {
+  height: 100%;
+  transition: width 0.3s ease;
+}
+
+.confidence-high { 
+  background-color: #10b981; 
+}
+
+.confidence-medium { 
+  background-color: #f59e0b; 
+}
+
+.confidence-low { 
+  background-color: #ef4444; 
+}
+
+/* ===== RECORDS TABLE STYLES ===== */
+.records-table {
+  @apply w-full border-collapse;
+}
+
+.records-table th {
+  background: var(--acr-black);
+  color: var(--acr-white);
+  text-align: left;
+}
+
+.records-table td {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+
+
+.records-table tbody tr:hover {
+  @apply bg-gray-50;
+}
+
+/* ===== TOOLTIP SYSTEM ===== */
+.tooltip {
+  @apply relative;
+}
+
+.tooltip::before {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(0, 0, 0, 0.95);
+  color: white;
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+  pointer-events: none;
+  z-index: 99999;
+  margin-bottom: 10px;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  min-width: max-content;
+}
+
+.tooltip::after {
+  content: "";
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 6px solid transparent;
+  border-top-color: rgba(0, 0, 0, 0.95);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+  pointer-events: none;
+  z-index: 99999;
+  margin-bottom: 4px;
+}
+
+.tooltip:hover::before,
+.tooltip:hover::after {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* ===== TOAST NOTIFICATIONS ===== */
+#toast-container-floating {
+  position: fixed;
+  top: 65px;
+  right: 16px;
+  z-index: 10000;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.toast {
+  @apply bg-white border border-gray-200 rounded-lg shadow-lg p-4 max-w-sm;
+}
+
+.toast-success {
+  background-color: var(--acr-green3);
+  /* border: 1px solid var(--acr-black); */
+}
+
+.toast-error {
+  background-color: var(--acr-orange);
+  border: 1px solid var(--acr-black);
+}
+
+.toast-info {
+  background-color: var(--acr-green2);
+  border: 1px solid var(--acr-black);
+}
+
+/* ===== LOADING SPINNER ===== */
+.spinner {
+  /* size: h-8 w-8 */
+  width: 2rem;
+  height: 2rem;
+  /* rounded-full */
+  border-radius: 9999px;
+  /* create a thin border with only the bottom colored to mimic the original Tailwind rule
+     border-b-2 border-blue-600 */
+  border: 2px solid transparent;
+  border-bottom-color: #ebb625; /* Tailwind blue-600 */
+  /* spin animation (equivalent to Tailwind's animate-spin) */
+  animation: spin 1s linear infinite;
+  box-sizing: border-box;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ===== TABULATOR OVERRIDES (Legacy) ===== */
+/* .tabulator {
+  @apply border border-gray-200 rounded-lg overflow-hidden;
+}
+
+.tabulator .tabulator-header {
+  @apply bg-gray-50 border-b border-gray-200;
+}
+
+.tabulator .tabulator-header .tabulator-col {
+  @apply border-r border-gray-200 bg-gray-50;
+}
+
+.tabulator .tabulator-tableholder .tabulator-table .tabulator-row {
+  @apply border-b border-gray-100;
+}
+
+.tabulator .tabulator-tableholder .tabulator-table .tabulator-row:hover {
+  @apply bg-gray-50;
+}
+
+.tabulator .tabulator-tableholder .tabulator-table .tabulator-row.tabulator-selected {
+  @apply bg-blue-50;
+}
+*/
+/* Legacy tree level indentation (for old Tabulator code) 
+.tabulator .tabulator-tree-level-1 { 
+  padding-left: 20px !important; 
+}
+.tabulator .tabulator-tree-level-2 { 
+  padding-left: 40px !important; 
+}
+.tabulator .tabulator-tree-level-3 { 
+  padding-left: 60px !important; 
+}
+.tabulator .tabulator-tree-level-4 { 
+  padding-left: 80px !important; 
+}
+.tabulator .tabulator-tree-level-5 { 
+  padding-left: 100px !important; 
+} 
+*/
+
+/* .tree-node-root { 
+  background-color: #4b5563 !important; 
+  color: white !important; 
+  font-weight: bold; 
+}
+.tree-node-chapter { 
+  background-color: #6b7280 !important; 
+  color: white !important; 
+  font-weight: 500; 
+}
+.tree-node-leaf { 
+  background-color: transparent; 
+} */
+
+.tabulator-row.tree-node-root .tabulator-cell { 
+  color: white !important; 
+}
+.tabulator-row.tree-node-chapter .tabulator-cell { 
+  color: white !important; 
+}
+
+/* ===== TREE CONTROLS STYLING ===== */
+.tree-controls {
+  background: var(--acr-black);
+  border: 1px solid var(--acr-grey);
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.tree-controls-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.tree-controls-label {
+  color: var(--acr-white);
+  font-weight: 600;
+  font-size: 14px;
+  margin-right: 4px;
+  /* min-width: 80px; */
+}
+
+.tree-controls-divider {
+  border-left: 1px solid var(--acr-grey);
+  height: 24px;
+  margin: 0 6px;
+}
+
+/* Tree Control Buttons */
+.tree-ctrl-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border: 1px solid var(--acr-grey);
+  border-radius: 6px;
+  background: var(--acr-dust);
+  color: var(--acr-black);
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-decoration: none;
+}
+
+.tree-ctrl-btn:hover {
+  background: var(--acr-orange);
+  color: var(--acr-white);
+  border-color: var(--acr-orange);
+}
+
+.tree-ctrl-btn-expand {
+  background: var(--acr-green);
+  color: var(--acr-white);
+  border-color: var(--acr-green);
+}
+
+.tree-ctrl-btn-expand:hover {
+  background: var(--acr-hover);
+  border-color: var(--acr-hover);
+}
+
+.tree-ctrl-btn-collapse {
+  background: var(--acr-orange);
+  color: var(--acr-white);
+  border-color: var(--acr-orange);
+}
+
+.tree-ctrl-btn-collapse:hover {
+  background: #d73507;
+  border-color: #d73507;
+}
+
+.tree-ctrl-btn-level {
+  background: var(--acr-dust);
+  color: var(--acr-black);
+  border-color: var(--acr-grey);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.tree-ctrl-btn-level:hover {
+  background: var(--acr-orange);
+  color: var(--acr-white);
+  border-color: var(--acr-orange);
+}
+
+/* ===== MODAL STYLING ===== */
+.modal-input {
+  @apply w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500;
+  background-color: #f8fafc;
+}
+
+.modal-input:focus {
+  background-color: #ffffff;
+}
+
+.modal-select {
+  @apply w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500;
+  background-color: #f8fafc;
+}
+
+.modal-select:focus {
+  background-color: #ffffff;
+}
+
+/* ===== RESPONSIVE DESIGN ===== */
+@media (max-width: 768px) {
+  .card {
+    @apply p-4;
+  }
+  
+  .btn-primary, .btn-secondary {
+    @apply px-3 py-2 text-sm;
+  }
+  
+  .tree-table {
+    font-size: 0.9em;
+  }
+  
+  .tree-table th,
+  .tree-table td {
+    padding: 6px 8px;
+  }
+  
+  .records-table th,
+  .records-table td {
+    @apply px-2 py-2 text-sm;
+  }
+}

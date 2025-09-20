@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Debug Page</title>
+</head>
+<body>
+    <h1>Debug Page</h1>
+    <div id="output"></div>
+    
+    <script>
+        // Test if we can load files from the backend
+        async function testLoadFiles() {
+            const output = document.getElementById('output');
+            
+            try {
+                // First, get the list of files
+                const response = await fetch('http://localhost:8005/files/');
+                const files = await response.json();
+                
+                output.innerHTML += '<h2>Available Files:</h2>';
+                output.innerHTML += '<pre>' + JSON.stringify(files, null, 2) + '</pre>';
+                
+                // Try to load a processed file if available
+                if (files.processed_files && files.processed_files.length > 0) {
+                    const processedFile = files.processed_files[0];
+                    output.innerHTML += `<h2>Testing processed file: ${processedFile}</h2>`;
+                    
+                    const processedResponse = await fetch(`http://localhost:8005/processed/${processedFile}`);
+                    if (processedResponse.ok) {
+                        const processedData = await processedResponse.json();
+                        output.innerHTML += '<p>✓ Successfully loaded processed file</p>';
+                        output.innerHTML += '<p>Data sample:</p>';
+                        output.innerHTML += '<pre>' + JSON.stringify(processedData).substring(0, 500) + '...</pre>';
+                    } else {
+                        output.innerHTML += '<p>✗ Failed to load processed file</p>';
+                    }
+                }
+                
+                // Try to load a categorized file if available
+                if (files.records && files.records.length > 0) {
+                    const record = files.records.find(r => r.ml_processed);
+                    if (record) {
+                        output.innerHTML += `<h2>Testing categorized file: ${record.code}.json</h2>`;
+                        
+                        const categorizedResponse = await fetch(`http://localhost:8005/categorized/${record.code}.json`);
+                        if (categorizedResponse.ok) {
+                            const categorizedData = await categorizedResponse.json();
+                            output.innerHTML += '<p>✓ Successfully loaded categorized file</p>';
+                        } else {
+                            output.innerHTML += '<p>✗ Failed to load categorized file</p>';
+                        }
+                    }
+                }
+                
+            } catch (error) {
+                output.innerHTML += '<p>Error: ' + error.message + '</p>';
+            }
+        }
+        
+        testLoadFiles();
+    </script>
+</body>
+</html>

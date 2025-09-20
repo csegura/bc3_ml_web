@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BC3 Budget Calculator</title>
+  <link rel="stylesheet" href="/static/styles.css">
+  <style>
+    .tree-table { width: 100%; border-collapse: collapse; margin-top: 16px; font-size: 0.70em; }
+    .tree-table th, .tree-table td { padding: 3px 5px; border-bottom: 1px solid #e0e0e0; text-align: left; }
+    .tree-table th { background: #f8f8f8; font-size: 0.98em; }
+    .tree-row-root { font-weight: bold; background: #f3f3f3; }
+    .tree-row-chapter { font-weight: 500; background: #d3d3d3; }
+    .tree-row-leaf { color: #393939; }
+    .tree-toggle { background: none; border: none; cursor: pointer; font-size: 1em; vertical-align: middle; color: #ffc400; 
+        padding-right: 3px; margin-left: -10px; margin-top: -3px;}
+    .tree-toggle:focus { outline: 2px solid #007bff; }
+    #treeContainer0 { width: 99vw; max-width: 99vw; overflow-x: auto; margin: 0; padding: 0; }
+    @media (max-width: 700px) {
+      .tree-table { font-size: 0.70em; }
+      .tree-table th, .tree-table td { padding: 2px 2px; }
+      #treeContainer0 { margin: 0 3px; padding: 0 2px; }
+    }
+  </style>
+</head>
+<body>
+  <h1>BC3 Budget Calculator</h1>
+  <div>
+    <label for="fileSelect">Select processed file:</label>
+    <select id="fileSelect"></select>
+    <button id="loadBtn">Show Tree</button>
+    <div style="font-size:0.95em;color:#666;margin:8px 0 0 0;">Click ▶/▼ to expand or collapse tree nodes.</div>
+    <div id="calcMessage"></div>
+    <div id="treeContainer"></div>
+  </div>
+  <script src="/static/calc.js"></script>
+</body>
+</html>

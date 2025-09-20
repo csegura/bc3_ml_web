@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tree Test</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://unpkg.com/tabulator-tables@5.5.2/dist/css/tabulator.min.css" rel="stylesheet">
+    <script type="text/javascript" src="https://unpkg.com/tabulator-tables@5.5.2/dist/js/tabulator.min.js"></script>
+</head>
+<body class="p-8">
+    <h1 class="text-2xl font-bold mb-4">Tree Test</h1>
+    <button id="expandBtn" class="bg-blue-500 text-white px-4 py-2 mr-2">Expand All</button>
+    <button id="collapseBtn" class="bg-gray-500 text-white px-4 py-2">Collapse All</button>
+    
+    <div id="test-table" class="mt-4"></div>
+
+    <script>
+        // Simple test data
+        const testData = [
+            {
+                id: 1,
+                name: "Root Item",
+                value: 100,
+                _children: [
+                    {
+                        id: 2,
+                        name: "Child 1",
+                        value: 50,
+                        _children: [
+                            { id: 3, name: "Grandchild 1", value: 25 },
+                            { id: 4, name: "Grandchild 2", value: 25 }
+                        ]
+                    },
+                    {
+                        id: 5,
+                        name: "Child 2", 
+                        value: 50,
+                        _children: [
+                            { id: 6, name: "Grandchild 3", value: 50 }
+                        ]
+                    }
+                ]
+            }
+        ];
+
+        const table = new Tabulator("#test-table", {
+            data: testData,
+            dataTree: true,
+            dataTreeElementColumn: "name",
+            dataTreeChildField: "_children",
+            dataTreeStartExpanded: true,
+            columns: [
+                { title: "Name", field: "name", widthGrow: 1 },
+                { title: "Value", field: "value", width: 100 }
+            ]
+        });
+
+        document.getElementById('expandBtn').addEventListener('click', function() {
+            console.log('Expanding...');
+            
+            // Recursive function to expand all nodes
+            function expandRecursively() {
+                let expandedSomething = false;
+                const rows = table.getRows();
+                
+                rows.forEach(row => {
+                    const data = row.getData();
+                    if (data._children && data._children.length > 0) {
+                        // Check if this row is currently collapsed
+                        if (!row.isTreeExpanded()) {
+                            console.log('Expanding:', data.name);
+                            row.treeExpand();
+                            expandedSomething = true;
+                        }
+                    }
+                });
+                
+                // If we expanded something, wait a bit and try again for newly visible rows
+                if (expandedSomething) {
+                    setTimeout(expandRecursively, 50);
+                }
+            }
+            
+            expandRecursively();
+        });
+
+        document.getElementById('collapseBtn').addEventListener('click', function() {
+            console.log('Collapsing...');
+            table.getRows().forEach(row => {
+                if (row.getData()._children) {
+                    console.log('Collapsing:', row.getData().name);
+                    row.treeCollapse();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
