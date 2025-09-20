@@ -13,7 +13,7 @@ This project provides a backend system for uploading, processing, and classifyin
 
 ![BC3 Tree View](images/bc3_tree.png)
 ![ML Categorization](images/bc3_cat.png)
-![ML Categorization Edit](images/bc3_cat_edit.png)
+![ML Categorization Edit](images/bc3_edit_cat.png)
 
 ## Quick Start
 
